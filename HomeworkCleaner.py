@@ -5,22 +5,28 @@
 # Project       : TA
 # State         :
 # Creation Date : 2014-12-26
-#  Last modified: 2014-12-26 16:31:58
+#  Last modified: 2014-12-26 16:51:46
 # Description   : 
 # 
 
 import os
 import zipfile
 
-def checkClearDir(path):
+def checkClearDir(path, filenames):
     s = os.sep
     if (path.endswith('.sdf') or
             path.endswith('.opensdf') or
             path.endswith('.aps') or
             path.find(s+'ipch'+s) >= 0 or
-            (path.find(s+'Debug'+s) >= 0 and not path.endswith('.exe')) or
-            (path.find(s+'Release'+s) >= 0 and not path.endswith('.exe'))):
+            path.endswith('.pdb') or
+            (path.find('Debug'+s) >= 0 and not path.endswith('.exe')) or
+            (path.find('Release'+s) >= 0 and not path.endswith('.exe'))):
         return True
+    if (path.endswith('d.dll')):
+        dllname = path.split(os.sep)[-1][:-5]
+        for filename in filenames:
+            if dllname == filename[:-4]:
+                return True
     return False
 
 def zipDir(cd, dirname):
@@ -30,7 +36,7 @@ def zipDir(cd, dirname):
     for dirpath, dirnames, filenames in os.walk(searchDir):
         for filename in filenames:
             fileAbsPath = os.path.join(dirpath, filename)
-            if not checkClearDir(fileAbsPath):
+            if not checkClearDir(fileAbsPath, filenames):
                 f.write(fileAbsPath, fileAbsPath[searchDir.__len__():])
     f.close()
 

@@ -5,7 +5,7 @@
 # Project       : TA
 # State         :
 # Creation Date : 2014-12-26
-#  Last modified: 2014-12-26 16:15:07
+#  Last modified: 2014-12-26 16:31:58
 # Description   : 
 # 
 
@@ -13,10 +13,13 @@ import os
 import zipfile
 
 def checkClearDir(path):
+    s = os.sep
     if (path.endswith('.sdf') or
             path.endswith('.opensdf') or
-            (path.find('Debug') >= 0 and not path.endswith('.exe')) or
-            (path.find('Release') >= 0 and not path.endswith('.exe'))):
+            path.endswith('.aps') or
+            path.find(s+'ipch'+s) >= 0 or
+            (path.find(s+'Debug'+s) >= 0 and not path.endswith('.exe')) or
+            (path.find(s+'Release'+s) >= 0 and not path.endswith('.exe'))):
         return True
     return False
 
@@ -41,5 +44,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print('nice!')
     os.system('pause')
  

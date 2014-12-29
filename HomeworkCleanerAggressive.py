@@ -1,32 +1,35 @@
 #! D:\Python33\python.exe
 # -*- coding: utf-8 -*-
-# Module        : HomeworkCleaner.py
+# Module        : HomeworkCleanerAggressive.py
 # Author        : bss
 # Project       : TA
 # State         :
 # Creation Date : 2014-12-26
-#  Last modified: 2014-12-26 16:51:46
+#  Last modified: 2014-12-29 17:01:28
 # Description   : 
 # 
 
 import os
 import zipfile
 
+# 是否要删除此文件
 def checkClearDir(path, filenames):
     s = os.sep
-    if (path.endswith('.sdf') or
-            path.endswith('.opensdf') or
-            path.endswith('.aps') or
-            path.find(s+'ipch'+s) >= 0 or
-            path.endswith('.pdb') or
-            (path.find('Debug'+s) >= 0 and not path.endswith('.exe')) or
-            (path.find('Release'+s) >= 0 and not path.endswith('.exe'))):
-        return True
     if (path.endswith('d.dll')):
         dllname = path.split(os.sep)[-1][:-5]
         for filename in filenames:
             if dllname == filename[:-4]:
                 return True
+    if (path.endswith('.dll') or path.endswith('.exe')):
+        return False
+    if (path.endswith('.sdf') or
+            path.endswith('.opensdf') or
+            path.endswith('.aps') or
+            path.find(s+'ipch'+s) >= 0 or
+            path.endswith('.pdb') or
+            path.find('Debug'+s) >= 0 or
+            path.find('Release'+s) >= 0 :
+        return True
     return False
 
 def zipDir(cd, dirname):

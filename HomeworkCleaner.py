@@ -1,20 +1,25 @@
 #! D:\Python33\python.exe
 # -*- coding: utf-8 -*-
-# Module        : HomeworkCleanerAggressive.py
+# Module        : HomeworkCleaner.py
 # Author        : bss
 # Project       : TA
 # State         :
 # Creation Date : 2014-12-26
-#  Last modified: 2014-12-29 17:01:28
+#  Last modified: 2014-12-29 17:44:18
 # Description   : 
 # 
 
 import os
 import zipfile
 
+g_basicList = ['obj','tlog','pdb','ilk','idb','log','lastbuildstate',
+        'manifest','res','rc','cache','cs','resources','baml','lref',
+        'exe.config','filelistabsolute.txt','pch','cpp','h']
+
 # 是否要删除此文件
-def checkClearDir(path, filenames):
+def checkClearDir(path, filenames, choose):
     s = os.sep
+    path = path.lower() # windows
     if (path.endswith('d.dll')):
         dllname = path.split(os.sep)[-1][:-5]
         for filename in filenames:
@@ -26,33 +31,50 @@ def checkClearDir(path, filenames):
             path.endswith('.opensdf') or
             path.endswith('.aps') or
             path.find(s+'ipch'+s) >= 0 or
-            path.endswith('.pdb') or
-            path.find('Debug'+s) >= 0 or
-            path.find('Release'+s) >= 0 :
+            path.endswith('.pdb')):
         return True
+    if (path.find('debug'+s) >= 0 or
+            path.find('release'+s) >= 0) :
+        if 1 == choose:     # basic
+            for ext in g_basicList:
+                if path.endswith('.' + ext):
+                    return True
+            print('keep ' + path.split(os.sep)[-1])
+        else:   # aggressive, only keep dll and exe
+            return True
     return False
 
-def zipDir(cd, dirname):
+def zipDir(cd, dirname, choose):
     zipName = os.path.join(cd, dirname + '.zip')
     f = zipfile.ZipFile(zipName, 'w', zipfile.ZIP_DEFLATED)
     searchDir = os.path.join(cd, dirname)
     for dirpath, dirnames, filenames in os.walk(searchDir):
         for filename in filenames:
             fileAbsPath = os.path.join(dirpath, filename)
-            if not checkClearDir(fileAbsPath, filenames):
+            if not checkClearDir(fileAbsPath, filenames, choose):
                 f.write(fileAbsPath, fileAbsPath[searchDir.__len__():])
     f.close()
 
 def main():
     cd = os.path.abspath('.')
     print(cd)
+    print('https://github.com/bssthu/HomeworkCleaner')
+    choose = input('1. Basic; 2. Aggressive ')
+    try:
+        choose = int(choose)
+    except:
+        pass
+    if (choose != 1 and choose != 2):
+        print('bye~')
+        return
+
     for dirname in os.listdir(cd):
         if os.path.isdir(os.path.join(cd, dirname)) and (dirname != '.git'):
             print(dirname + ':')
-            zipDir(cd, dirname)
+            zipDir(cd, dirname, choose)
+    print('nice!')
 
 if __name__ == '__main__':
     main()
-    print('nice!')
     os.system('pause')
  

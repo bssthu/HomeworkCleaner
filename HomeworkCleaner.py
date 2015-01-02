@@ -5,7 +5,7 @@
 # Project       : TA
 # State         :
 # Creation Date : 2014-12-26
-#  Last modified: 2014-12-29 17:44:18
+#  Last modified: 2015-01-02 11:56:12
 # Description   : 
 # 
 
@@ -14,7 +14,8 @@ import zipfile
 
 g_basicList = ['obj','tlog','pdb','ilk','idb','log','lastbuildstate',
         'manifest','res','rc','cache','cs','resources','baml','lref',
-        'exe.config','filelistabsolute.txt','pch','cpp','h']
+        'exe.config','filelistabsolute.txt','pch','cpp','h',
+        'unsuccessfulbuild']
 
 # 是否要删除此文件
 def checkClearDir(path, filenames, choose):

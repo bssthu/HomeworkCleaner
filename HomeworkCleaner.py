@@ -5,7 +5,7 @@
 # Project       : TA
 # State         :
 # Creation Date : 2014-12-26
-#  Last modified: 2015-01-02 11:56:12
+#  Last modified: 2015-01-16 20:29:43
 # Description   : 
 # 
 
@@ -15,7 +15,7 @@ import zipfile
 g_basicList = ['obj','tlog','pdb','ilk','idb','log','lastbuildstate',
         'manifest','res','rc','cache','cs','resources','baml','lref',
         'exe.config','filelistabsolute.txt','pch','cpp','h',
-        'unsuccessfulbuild']
+        'unsuccessfulbuild','enc','dep','tlh','tli','sbr','bsc']
 
 # 是否要删除此文件
 def checkClearDir(path, filenames, choose):
@@ -32,15 +32,24 @@ def checkClearDir(path, filenames, choose):
             path.endswith('.opensdf') or
             path.endswith('.aps') or
             path.find(s+'ipch'+s) >= 0 or
-            path.endswith('.pdb')):
+            path.endswith('.ncb') or
+            path.endswith('thumbs.db') or
+            path.endswith('.pdb') or
+            path.startswith('~$ ')):
         return True
+    if (path.endswith('.rar') or
+            path.endswith('.zip') or
+            path.endswith('.7z') or
+            path.endswith('.tar') or
+            path.endswith('.gz')):
+        print('>archive ' + path.split(os.sep)[-1])
     if (path.find('debug'+s) >= 0 or
             path.find('release'+s) >= 0) :
         if 1 == choose:     # basic
             for ext in g_basicList:
                 if path.endswith('.' + ext):
                     return True
-            print('keep ' + path.split(os.sep)[-1])
+            print('>keep ' + path.split(os.sep)[-1])
         else:   # aggressive, only keep dll and exe
             return True
     return False

@@ -20,6 +20,9 @@ g_basicList = ['obj','tlog','pdb','ilk','idb','log','lastbuildstate',
 # 是否要删除此文件
 def checkClearDir(path, filenames, choose):
     s = os.sep
+    if (path.find('__MACOSX'+s) >= 0
+            or path.endswith('.DS_Store')):
+        return True
     path = path.lower() # windows
     if (path.endswith('d.dll')):
         dllname = path.split(os.sep)[-1][:-5]

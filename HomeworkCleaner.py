@@ -5,7 +5,6 @@
 # Project       : TA
 # State         :
 # Creation Date : 2014-12-26
-#  Last modified: 2015-01-16 20:29:43
 # Description   : 
 # 
 
@@ -15,7 +14,7 @@ import zipfile
 g_basicList = ['obj','tlog','pdb','ilk','idb','log','lastbuildstate',
         'manifest','res','rc','cache','cs','resources','baml','lref',
         'exe.config','filelistabsolute.txt','pch','cpp','h',
-        'unsuccessfulbuild','enc','dep','tlh','tli','sbr','bsc']
+        'enc','dep','tlh','tli','sbr','bsc','dll.bi']
 
 # 是否要删除此文件
 def checkClearDir(path, filenames, choose):
@@ -38,6 +37,7 @@ def checkClearDir(path, filenames, choose):
             path.endswith('.ncb') or
             path.endswith('thumbs.db') or
             path.endswith('.pdb') or
+            path.endswith('unsuccessfulbuild') or
             path.startswith('~$ ')):
         return True
     if (path.endswith('.rar') or

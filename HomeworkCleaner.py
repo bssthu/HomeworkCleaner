@@ -14,7 +14,8 @@ import zipfile
 g_basicList = ['obj','tlog','pdb','ilk','idb','log','lastbuildstate',
         'manifest','res','rc','cache','cs','resources','baml','lref',
         'exe.config','filelistabsolute.txt','pch','cpp','h',
-        'enc','dep','tlh','tli','sbr','bsc','dll.bi']
+        'enc','dep','tlh','tli','sbr','bsc','dll.bi','lastcodeanalysissucceeded',
+        'nativecodeanalysis.xml','nativecodeanalysis.all.xml']
 
 # 是否要删除此文件
 def checkClearDir(path, filenames, choose):

@@ -13,7 +13,7 @@ import zipfile
 
 g_basicList = ['obj','tlog','pdb','ilk','idb','log','lastbuildstate',
         'manifest','res','rc','cache','cs','resources','baml','lref',
-        'exe.config','filelistabsolute.txt','pch','cpp','h',
+        'exe.config','filelistabsolute.txt','pch','opt','o','cpp','h',
         'enc','dep','tlh','tli','sbr','bsc','dll.bi','lastcodeanalysissucceeded',
         'nativecodeanalysis.xml','nativecodeanalysis.all.xml']
 
